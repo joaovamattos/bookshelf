@@ -1,9 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 
-import { Container, BookImage, Title, Author } from "./styles";
 import noThumb from "../../images/noThumbnail.png";
 
+import { Container, BookImage, Title, Author } from "./styles";
 interface Book {
   volumeInfo: {
     imageLinks: {
