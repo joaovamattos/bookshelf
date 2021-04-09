@@ -1,11 +1,13 @@
 import styled from "styled-components/native";
 
-export const Container = styled.View`
-  width: 116px;
-`;
+interface ContainerProps {
+  home: boolean;
+}
 
-export const Description = styled.View`
-  width: 60%;
+export const Container = styled.View<ContainerProps>`
+  width: 100px;
+  margin-bottom: 24px;
+  margin-right: ${(props) => (props.home ? 16 : 0)}px;
 `;
 
 export const BookImage = styled.Image`

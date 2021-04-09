@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-import { Dimensions } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 
 export const Main = styled.ScrollView`
@@ -56,18 +55,10 @@ export const Amount = styled.Text`
   color: ${(props) => props.theme.colors.primary};
 `;
 
-export const SeeAll = styled(RectButton)`
-  background: transparent;
-  font-weight: 700;
-  font-size: 12px;
-  color: ${(props) => props.theme.colors.primary};
-`;
-
 export const BookList = styled.ScrollView.attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
 })`
   flex: 1;
   height: 100%;
-  margin-bottom: 24px;
 `;

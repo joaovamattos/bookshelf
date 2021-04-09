@@ -1,20 +1,56 @@
 import React from "react";
+import { View } from "react-native";
 
-import { Container, BookImage, Description, Title, Author } from "./styles";
+import { Container, BookImage, Title, Author } from "./styles";
+import noThumb from "../../images/noThumbnail.png";
 
-function Book() {
+interface Book {
+  volumeInfo: {
+    imageLinks: {
+      smallThumbnail: string | undefined;
+    };
+    title: string;
+    authors: string;
+  };
+}
+interface BookProps {
+  book: Book | null;
+  home: boolean;
+}
+
+function Book({ book, home }: BookProps) {
+  if (!book) {
+    return (
+      <Container home={home}>
+        <BookImage
+          source={{
+            uri:
+              "https://images-na.ssl-images-amazon.com/images/I/5115VsJpk3L._SX319_BO1,204,203,200_.jpg",
+          }}
+        />
+        <View>
+          <Title>O Hobbit</Title>
+          <Author>J.R.R. Tolkien</Author>
+        </View>
+      </Container>
+    );
+  }
+
   return (
-    <Container>
+    <Container home={home}>
       <BookImage
-        source={{
-          uri:
-            "https://images-na.ssl-images-amazon.com/images/I/51msVf94L2L._SX346_BO1,204,203,200_.jpg",
-        }}
+        source={
+          book.volumeInfo && book.volumeInfo.imageLinks
+            ? {
+                uri: book.volumeInfo.imageLinks.smallThumbnail,
+              }
+            : noThumb
+        }
       />
-      <Description>
-        <Title numberOfLines={1}>Harry potter e o enigma do príncipe</Title>
-        <Author numberOfLines={1}>J.K. Rowling</Author>
-      </Description>
+      <View>
+        <Title numberOfLines={1}>{book.volumeInfo.title}</Title>
+        <Author numberOfLines={1}>{book.volumeInfo.authors}</Author>
+      </View>
     </Container>
   );
 }

@@ -8,6 +8,6 @@ export default {
     background: "#1A1B1D",
     foreground: "#303135",
     text: "#F4F4F8",
-    lightText: "#999999",
+    lightText: "#e1e1e6",
   },
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { NavigationScreenProp } from "react-navigation";
 
 import { useTheme } from "../../contexts/theme";
 import { Container } from "../../styles/global";
@@ -18,9 +19,12 @@ import {
   SectionWrapper,
   BookList,
 } from "./styles";
-import { FlatList } from "react-native-gesture-handler";
 
-function Dashboard() {
+export interface DashboardProps {
+  navigation: NavigationScreenProp<any, any>;
+}
+
+function Dashboard({ navigation }: DashboardProps) {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -39,7 +43,7 @@ function Dashboard() {
                 <Feather name="sun" size={20} color={theme.colors.text} />
               )}
             </Button>
-            <Button>
+            <Button onPress={() => navigation.navigate("Search")}>
               <Feather name="search" size={20} color={theme.colors.text} />
             </Button>
           </Wrapper>
@@ -60,8 +64,8 @@ function Dashboard() {
           </SectionWrapper>
 
           <BookList>
-            <Book />
-            <Book />
+            <Book home={true} book={null} />
+            <Book home={true} book={null} />
           </BookList>
         </View>
 
@@ -72,10 +76,10 @@ function Dashboard() {
           </SectionWrapper>
 
           <BookList>
-            <Book />
-            <Book />
-            <Book />
-            <Book />
+            <Book home={true} book={null} />
+            <Book home={true} book={null} />
+            <Book home={true} book={null} />
+            <Book home={true} book={null} />
           </BookList>
         </View>
       </Main>

@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Dashboard from "./pages/Dashboard";
+import Search from "./pages/Search";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -21,6 +22,7 @@ const Routes: React.FC = () => {
         }}
       >
         <Screen name="Dashboard" component={Dashboard} />
+        <Screen name="Search" component={Search} />
       </Navigator>
     </NavigationContainer>
   );
