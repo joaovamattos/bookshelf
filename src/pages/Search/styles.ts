@@ -51,7 +51,7 @@ export const Button = styled(RectButton)`
 
 export const Input = styled.TextInput`
   margin-bottom: 24px;
-  padding-left: 24px;
+  padding-left: 16px;
   width: ${Dimensions.get("window").width - 96}px;
   height: 48px;
   background: ${(props) => props.theme.colors.foreground};

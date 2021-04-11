@@ -14,28 +14,11 @@ interface Book {
   };
 }
 interface BookProps {
-  book: Book | null;
+  book: Book;
   home: boolean;
 }
 
 function Book({ book, home }: BookProps) {
-  if (!book) {
-    return (
-      <Container home={home}>
-        <BookImage
-          source={{
-            uri:
-              "https://images-na.ssl-images-amazon.com/images/I/5115VsJpk3L._SX319_BO1,204,203,200_.jpg",
-          }}
-        />
-        <View>
-          <Title>O Hobbit</Title>
-          <Author>J.R.R. Tolkien</Author>
-        </View>
-      </Container>
-    );
-  }
-
   return (
     <Container home={home}>
       <BookImage

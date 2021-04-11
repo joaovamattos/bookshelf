@@ -30,28 +30,28 @@ interface Book {
   };
 }
 interface BookProps {
-  book: Book | null;
+  book: Book;
+}
+
+interface List {
+  label: string | null;
+  value: string | null;
 }
 
 function BookForm({ book }: BookProps) {
-  const [list, setList] = useState({ label: "I want to read", value: "want" });
+  const [list, setList] = useState<List>({
+    label: "I want to read",
+    value: "wantToRead",
+  });
   const { theme } = useTheme();
 
-  if (!book) {
-    return (
-      <Container>
-        <BookImage
-          source={{
-            uri:
-              "https://images-na.ssl-images-amazon.com/images/I/5115VsJpk3L._SX319_BO1,204,203,200_.jpg",
-          }}
-        />
-        <View>
-          <Title>O Hobbit</Title>
-          <Author>J.R.R. Tolkien</Author>
-        </View>
-      </Container>
-    );
+  function handleSubmit() {
+    const data = {
+      list,
+      book,
+    };
+
+    console.log(data);
   }
 
   return (
@@ -78,16 +78,14 @@ function BookForm({ book }: BookProps) {
         <PickerWrapper>
           <DropDownPicker
             items={[
-              { label: "I want to read", value: "want" },
+              { label: "I want to read", value: "wantToRead", selected: true },
               { label: "I' m reading", value: "reading" },
               { label: "Read", value: "read" },
             ]}
-            placeholder="Select a list"
-            placeholderStyle={{
-              color: theme.colors.primary,
-              fontWeight: "bold",
+            onChangeItem={(item) => {
+              Promise.resolve(setList(item));
             }}
-            defaultValue={list}
+            arrowColor={theme.colors.primary}
             containerStyle={{ height: 48 }}
             style={{
               backgroundColor: theme.colors.background,
@@ -95,23 +93,17 @@ function BookForm({ book }: BookProps) {
               borderWidth: 2,
               borderRadius: 4,
             }}
-            itemStyle={{
-              justifyContent: "flex-start",
-            }}
-            labelStyle={{
-              color: theme.colors.primary,
-            }}
+            itemStyle={{ justifyContent: "flex-start" }}
+            labelStyle={{ color: theme.colors.primary }}
             dropDownStyle={{
               backgroundColor: theme.colors.background,
               borderColor: theme.colors.primary,
               borderWidth: 2,
             }}
-            arrowColor={theme.colors.primary}
-            onChangeItem={(item: any, index: number) => setList(item)}
           />
         </PickerWrapper>
 
-        <Button>
+        <Button onPress={handleSubmit}>
           <ButtonText>Add to list</ButtonText>
         </Button>
       </View>

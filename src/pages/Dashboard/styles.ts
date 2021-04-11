@@ -62,3 +62,10 @@ export const BookList = styled.ScrollView.attrs({
   flex: 1;
   height: 100%;
 `;
+
+export const NoBooks = styled.Text`
+  margin-bottom: 48px;
+  font-weight: 600;
+  font-size: 16px;
+  color: ${(props) => props.theme.colors.primary};
+`;

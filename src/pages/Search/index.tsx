@@ -93,7 +93,7 @@ function Search({ navigation }: SearchProps) {
           </Header>
           <Wrapper>
             <Input
-              placeholder="Type to search..."
+              placeholder="Search by title or ISBN (just numbers)"
               placeholderTextColor={theme.colors.lightText}
               value={search}
               onChangeText={setSearch}

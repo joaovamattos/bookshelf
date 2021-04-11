@@ -1,11 +1,11 @@
-import React from "react";
-import { View } from "react-native";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { NavigationScreenProp } from "react-navigation";
 
 import { useTheme } from "../../contexts/theme";
 import { Container } from "../../styles/global";
-import Reading from "../../components/Reading";
+import Reading from "../../components/ReadingBook";
 import Book from "../../components/Book";
 
 import {
@@ -18,6 +18,7 @@ import {
   Amount,
   SectionWrapper,
   BookList,
+  NoBooks,
 } from "./styles";
 
 export interface DashboardProps {
@@ -26,6 +27,9 @@ export interface DashboardProps {
 
 function Dashboard({ navigation }: DashboardProps) {
   const { theme, toggleTheme } = useTheme();
+  const [readingBooks, setReadingBooks] = useState([]);
+  const [wantToReadBooks, setWantToReadBooks] = useState([]);
+  const [readBooks, setReadBooks] = useState([]);
 
   return (
     <Container>
@@ -54,7 +58,13 @@ function Dashboard({ navigation }: DashboardProps) {
             <SectionTitle>I'm reading</SectionTitle>
             <Amount>(01)</Amount>
           </SectionWrapper>
-          <Reading />
+          {readingBooks.length > 0 ? (
+            readingBooks.map((book, index) => (
+              <Reading key={index} book={book} />
+            ))
+          ) : (
+            <NoBooks>No books yet :c</NoBooks>
+          )}
         </View>
 
         <View>
@@ -64,8 +74,13 @@ function Dashboard({ navigation }: DashboardProps) {
           </SectionWrapper>
 
           <BookList>
-            <Book home={true} book={null} />
-            <Book home={true} book={null} />
+            {wantToReadBooks.length > 0 ? (
+              wantToReadBooks.map((book, index) => (
+                <Book home={true} key={index} book={book} />
+              ))
+            ) : (
+              <NoBooks>No books yet :c</NoBooks>
+            )}
           </BookList>
         </View>
 
@@ -76,10 +91,13 @@ function Dashboard({ navigation }: DashboardProps) {
           </SectionWrapper>
 
           <BookList>
-            <Book home={true} book={null} />
-            <Book home={true} book={null} />
-            <Book home={true} book={null} />
-            <Book home={true} book={null} />
+            {readBooks.length > 0 ? (
+              readBooks.map((book, index) => (
+                <Book home={true} key={index} book={book} />
+              ))
+            ) : (
+              <NoBooks>No books yet :c</NoBooks>
+            )}
           </BookList>
         </View>
       </Main>
