@@ -54,15 +54,17 @@ export const PickerWrapper = styled.View`
 
 export const Button = styled(RectButton)`
   width: 100%;
-  height: 54px;
+  height: 48px;
   background: ${(props) => props.theme.colors.primary};
   border-radius: 4px;
+  flex-direction: row;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 export const ButtonText = styled.Text`
+  margin-left: 16px;
   font-weight: 700;
   font-size: 14px;
   color: ${(props) => props.theme.colors.background};

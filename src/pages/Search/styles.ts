@@ -50,7 +50,7 @@ export const Button = styled(RectButton)`
 `;
 
 export const Input = styled.TextInput`
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   padding-left: 16px;
   width: ${Dimensions.get("window").width - 96}px;
   height: 48px;
@@ -61,7 +61,7 @@ export const Input = styled.TextInput`
 `;
 
 export const InputIcon = styled(RectButton)`
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   width: 48px;
@@ -76,4 +76,23 @@ export const SearchImage = styled.Image`
   margin-top: 36px;
   width: 240px;
   height: 270px;
+`;
+
+export const ScanButton = styled(RectButton)`
+  margin-bottom: 20px;
+  width: 100%;
+  height: 48px;
+  background: ${(props) => props.theme.colors.primary};
+  border-radius: 4px;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ButtonText = styled.Text`
+  margin-left: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.background};
 `;

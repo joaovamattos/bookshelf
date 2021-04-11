@@ -30,7 +30,7 @@ interface Book {
   };
 }
 interface BookProps {
-  book: Book;
+  book: Book | null;
 }
 
 interface List {
@@ -52,6 +52,10 @@ function BookForm({ book }: BookProps) {
     };
 
     console.log(data);
+  }
+
+  if (book === null) {
+    return <Container />;
   }
 
   return (
