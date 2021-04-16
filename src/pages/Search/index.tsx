@@ -1,12 +1,11 @@
 import { API_KEY } from "@env";
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import axios from "axios";
-
 import { Modalize } from "react-native-modalize";
 import { View } from "react-native";
 import { Feather, AntDesign } from "@expo/vector-icons";
 import { NavigationScreenProp } from "react-navigation";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import axios from "axios";
 
 import { useTheme } from "../../contexts/theme";
 import { Container } from "../../styles/global";
@@ -34,6 +33,7 @@ import {
 interface BookProps {
   volumeInfo: {
     imageLinks: {
+      smallThumbnail: string | undefined;
       thumbnail: string | undefined;
     };
     title: string;
@@ -56,7 +56,7 @@ function Search({ navigation }: SearchProps) {
   const [scannerVisible, setScannerVisible] = useState(false);
 
   const modalizeRef = useRef<Modalize>(null);
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     if (search === "") {
@@ -89,18 +89,21 @@ function Search({ navigation }: SearchProps) {
   }
 
   const handleSubmit = useCallback(async () => {
-    const replaceSearch = search.replace(/\s/g, "+");
-    const response = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=${replaceSearch}&key=${API_KEY}`
-    );
-    const data = response.data;
+    if (search !== "") {
+      const replaceSearch = search.replace(/\s/g, "+");
 
-    if (data.totalItems === 0) {
-      setNotFound(true);
+      const response = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes?q=${replaceSearch}&key=${API_KEY}`
+      );
+      const data = response.data;
+
+      if (data.totalItems === 0) {
+        setNotFound(true);
+      }
+
+      setNotFound(false);
+      setBooks(data.items);
     }
-
-    setNotFound(false);
-    setBooks(data.items);
   }, [search]);
 
   if (scannerVisible) {
@@ -121,9 +124,22 @@ function Search({ navigation }: SearchProps) {
               <Title>Search books</Title>
               <Subtitle>Find the book of your dreams</Subtitle>
             </View>
-            <Button onPress={() => navigation.navigate("Dashboard")}>
-              <Feather name="arrow-left" size={20} color={theme.colors.text} />
-            </Button>
+            <Wrapper>
+              <Button onPress={() => toggleTheme()}>
+                {theme.title === "dark" ? (
+                  <Feather name="moon" size={20} color={theme.colors.text} />
+                ) : (
+                  <Feather name="sun" size={20} color={theme.colors.text} />
+                )}
+              </Button>
+              <Button onPress={() => navigation.navigate("Dashboard")}>
+                <Feather
+                  name="arrow-left"
+                  size={20}
+                  color={theme.colors.text}
+                />
+              </Button>
+            </Wrapper>
           </Header>
           <Wrapper>
             <Input
@@ -173,11 +189,11 @@ function Search({ navigation }: SearchProps) {
         ref={modalizeRef}
         modalStyle={{
           backgroundColor: theme.colors.background,
-          bottom: -48,
         }}
         handleStyle={{ backgroundColor: theme.colors.lightText }}
+        modalTopOffset={64}
       >
-        <BookForm book={selectedBook} />
+        {selectedBook !== null && <BookForm book={selectedBook} home={false} />}
       </Modalize>
     </>
   );

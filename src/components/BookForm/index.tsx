@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
+import { useBooks } from "../../contexts/books";
 import { useTheme } from "../../contexts/theme";
 import noThumb from "../../images/noThumbnail.png";
 
@@ -22,6 +23,7 @@ interface Book {
   volumeInfo: {
     imageLinks: {
       thumbnail: string | undefined;
+      smallThumbnail: string | undefined;
     };
     title: string;
     authors: string;
@@ -30,28 +32,83 @@ interface Book {
   };
 }
 interface BookProps {
-  book: Book | null;
+  book: Book;
+  home: boolean;
 }
-
 interface List {
   label: string | null;
   value: string | null;
 }
 
-function BookForm({ book }: BookProps) {
+function BookForm({ book, home }: BookProps) {
   const [list, setList] = useState<List>({
     label: "I want to read",
     value: "wantToRead",
   });
   const { theme } = useTheme();
+  const {
+    wantToRead,
+    reading,
+    read,
+    setWantToRead,
+    setReading,
+    setRead,
+  } = useBooks();
 
-  function handleSubmit() {
-    const data = {
-      list,
-      book,
-    };
+  async function handleSubmit() {
+    switch (list.value) {
+      case "wantToRead":
+        if (wantToRead !== undefined) {
+          setWantToRead([...wantToRead, book]);
+        } else {
+          setWantToRead([book]);
+        }
 
-    console.log(data);
+        if (home) {
+          const newReading = reading.filter((element) => element !== book);
+          setReading(newReading);
+
+          const newRead = read.filter((element) => element !== book);
+          setRead(newRead);
+        }
+        break;
+      case "reading":
+        if (reading !== undefined) {
+          setReading([...reading, book]);
+        } else {
+          setReading([book]);
+        }
+
+        if (home) {
+          const newWantToRead = wantToRead.filter(
+            (element) => element !== book
+          );
+          setWantToRead(newWantToRead);
+
+          const newRead = read.filter((element) => element !== book);
+          setRead(newRead);
+        }
+        break;
+      case "read":
+        if (read !== undefined) {
+          setRead([...read, book]);
+        } else {
+          setRead([book]);
+        }
+
+        if (home) {
+          const newWantToRead = wantToRead.filter(
+            (element) => element !== book
+          );
+          setWantToRead(newWantToRead);
+
+          const newReading = reading.filter((element) => element !== book);
+          setReading(newReading);
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   if (book === null) {

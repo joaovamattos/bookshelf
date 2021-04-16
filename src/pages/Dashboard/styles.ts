@@ -30,7 +30,7 @@ export const Button = styled(RectButton)`
   width: 36px;
   height: 36px;
   border-radius: 18px;
-  background-color: ${(props) => props.theme.colors.foreground};
+  background-color: ${(props) => props.theme.colors.background};
   justify-content: center;
   align-items: center;
 `;

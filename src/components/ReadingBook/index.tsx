@@ -15,6 +15,7 @@ interface Book {
   volumeInfo: {
     imageLinks: {
       thumbnail: string | undefined;
+      smallThumbnail: string | undefined;
     };
     title: string;
     authors: string;

@@ -3,11 +3,14 @@ import React from "react";
 
 import App from "../App";
 import { ThemeProvider } from "./contexts/theme";
+import { BooksProvider } from "./contexts/books";
 
 const src: React.FC = () => {
   return (
     <ThemeProvider>
-      <App />
+      <BooksProvider>
+        <App />
+      </BooksProvider>
     </ThemeProvider>
   );
 };

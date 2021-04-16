@@ -8,19 +8,29 @@ function usePersistedState<T>(key: string, initialState: T): Response<T> {
   const [storagedVerified, setStoragedVerified] = useState(false);
 
   useEffect(() => {
-    if (storagedVerified) {
-      async function setItem() {
-        await AsyncStorage.setItem(key, JSON.stringify(state));
+    async function loadData() {
+      const storeged = await AsyncStorage.getItem(key);
+      if (storeged) {
+        setState(JSON.parse(storeged));
       }
+    }
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    if (storagedVerified) {
+      const setItem = async () => {
+        await AsyncStorage.setItem(key, JSON.stringify(state));
+      };
       setItem();
     } else {
-      async function getItem() {
+      const getItem = async () => {
         const storagedValue = await AsyncStorage.getItem(key);
         if (storagedValue) {
           const parsed = JSON.parse(storagedValue);
           if (parsed.colors) setState(parsed);
         }
-      }
+      };
       getItem();
       setStoragedVerified(true);
     }
