@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import { useBooks } from "../../contexts/books";
@@ -45,6 +46,8 @@ function BookForm({ book, home }: BookProps) {
     label: "I want to read",
     value: "wantToRead",
   });
+
+  const navigation = useNavigation();
   const { theme } = useTheme();
   const {
     wantToRead,
@@ -58,8 +61,10 @@ function BookForm({ book, home }: BookProps) {
   async function handleSubmit() {
     switch (list.value) {
       case "wantToRead":
-        if (wantToRead !== undefined) {
-          setWantToRead([...wantToRead, book]);
+        if (wantToRead !== undefined || wantToRead !== []) {
+          if (!wantToRead.includes(book)) {
+            setWantToRead([...wantToRead, book]);
+          }
         } else {
           setWantToRead([book]);
         }
@@ -70,11 +75,15 @@ function BookForm({ book, home }: BookProps) {
 
           const newRead = read.filter((element) => element !== book);
           setRead(newRead);
+        } else {
+          navigation.navigate("Dashboard");
         }
         break;
       case "reading":
-        if (reading !== undefined) {
-          setReading([...reading, book]);
+        if (reading !== undefined || reading !== []) {
+          if (!reading.includes(book)) {
+            setReading([...reading, book]);
+          }
         } else {
           setReading([book]);
         }
@@ -87,11 +96,15 @@ function BookForm({ book, home }: BookProps) {
 
           const newRead = read.filter((element) => element !== book);
           setRead(newRead);
+        } else {
+          navigation.navigate("Dashboard");
         }
         break;
       case "read":
-        if (read !== undefined) {
-          setRead([...read, book]);
+        if (read !== undefined || read !== []) {
+          if (!read.includes(book)) {
+            setRead([...read, book]);
+          }
         } else {
           setRead([book]);
         }
@@ -104,6 +117,8 @@ function BookForm({ book, home }: BookProps) {
 
           const newReading = reading.filter((element) => element !== book);
           setReading(newReading);
+        } else {
+          navigation.navigate("Dashboard");
         }
         break;
       default:

@@ -69,3 +69,21 @@ export const NoBooks = styled.Text`
   font-size: 16px;
   color: ${(props) => props.theme.colors.primary};
 `;
+
+export const DeleteButton = styled(RectButton)`
+  margin: 0 24px;
+  height: 42px;
+  background: ${(props) => props.theme.colors.primary};
+  border-radius: 4px;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const DeleteButtonText = styled.Text`
+  margin-left: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.background};
+`;

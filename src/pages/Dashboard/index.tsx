@@ -12,6 +12,7 @@ import { Container } from "../../styles/global";
 import BookForm from "../../components/BookForm";
 import Reading from "../../components/ReadingBook";
 import Book from "../../components/Book";
+import DeleteBook from "../../components/DeleteBook";
 
 import {
   Main,
@@ -24,6 +25,8 @@ import {
   SectionWrapper,
   BookList,
   NoBooks,
+  DeleteButton,
+  DeleteButtonText,
 } from "./styles";
 
 export interface DashboardProps {
@@ -44,14 +47,54 @@ interface BookProps {
 
 function Dashboard({ navigation }: DashboardProps) {
   const [selectedBook, setSelectedBook] = useState<BookProps | null>(null);
+  const [selectedList, setSelectedList] = useState("");
+
   const { theme, toggleTheme } = useTheme();
-  const { wantToRead, reading, read } = useBooks();
+  const {
+    wantToRead,
+    setWantToRead,
+    reading,
+    setReading,
+    read,
+    setRead,
+  } = useBooks();
   const modalizeRef = useRef<Modalize>(null);
+  const removeModalizeRef = useRef<Modalize>(null);
+
+  const handleRemoveBook = useCallback((book: BookProps, list: string) => {
+    switch (list) {
+      case "wantToRead":
+        let filtered = wantToRead.filter((element) => element !== book);
+        setWantToRead(filtered);
+        break;
+      case "reading":
+        filtered = reading.filter((element) => element !== book);
+        setReading(filtered);
+        break;
+      case "read":
+        filtered = read.filter((element) => element !== book);
+        setRead(filtered);
+        break;
+      default:
+        break;
+    }
+    removeModalizeRef.current?.close();
+  }, []);
+
+  const handleOpenRemoveModal = useCallback((book: BookProps, list: string) => {
+    setSelectedBook(book);
+    setSelectedList(list);
+    removeModalizeRef.current?.open();
+  }, []);
 
   const handleOpenModal = useCallback((book: BookProps) => {
     setSelectedBook(book);
     modalizeRef.current?.open();
   }, []);
+
+  useEffect(() => {
+    modalizeRef.current?.close();
+  }, [wantToRead, reading, read]);
 
   return (
     <>
@@ -79,13 +122,14 @@ function Dashboard({ navigation }: DashboardProps) {
           <View>
             <SectionWrapper>
               <SectionTitle>I'm reading</SectionTitle>
-              <Amount>({reading?.length})</Amount>
+              <Amount>({reading.length})</Amount>
             </SectionWrapper>
-            {reading?.length > 0 ? (
+            {reading.length > 0 ? (
               reading.map((book, index) => (
                 <TouchableWithoutFeedback
                   key={index}
                   onPress={() => handleOpenModal(book)}
+                  onLongPress={() => handleOpenRemoveModal(book, "reading")}
                 >
                   <Reading key={index} book={book} />
                 </TouchableWithoutFeedback>
@@ -98,14 +142,17 @@ function Dashboard({ navigation }: DashboardProps) {
           <View>
             <SectionWrapper>
               <SectionTitle>I want to read</SectionTitle>
-              <Amount>({wantToRead?.length})</Amount>
+              <Amount>({wantToRead.length})</Amount>
             </SectionWrapper>
             <BookList>
-              {wantToRead?.length > 0 ? (
+              {wantToRead.length > 0 ? (
                 wantToRead.map((book, index) => (
                   <TouchableWithoutFeedback
                     key={index}
                     onPress={() => handleOpenModal(book)}
+                    onLongPress={() =>
+                      handleOpenRemoveModal(book, "wantToRead")
+                    }
                   >
                     <Book book={book} home={true} />
                   </TouchableWithoutFeedback>
@@ -119,15 +166,15 @@ function Dashboard({ navigation }: DashboardProps) {
           <View>
             <SectionWrapper>
               <SectionTitle>Read</SectionTitle>
-              <Amount>({read?.length})</Amount>
+              <Amount>({read.length})</Amount>
             </SectionWrapper>
-
             <BookList>
-              {read?.length > 0 ? (
+              {read.length > 0 ? (
                 read.map((book, index) => (
                   <TouchableWithoutFeedback
                     key={index}
                     onPress={() => handleOpenModal(book)}
+                    onLongPress={() => handleOpenRemoveModal(book, "read")}
                   >
                     <Book book={book} home={true} />
                   </TouchableWithoutFeedback>
@@ -149,6 +196,26 @@ function Dashboard({ navigation }: DashboardProps) {
         modalTopOffset={64}
       >
         {selectedBook !== null && <BookForm book={selectedBook} home={true} />}
+      </Modalize>
+
+      <Modalize
+        ref={removeModalizeRef}
+        modalStyle={{
+          backgroundColor: theme.colors.background,
+        }}
+        handleStyle={{ backgroundColor: theme.colors.lightText }}
+        modalTopOffset={64}
+      >
+        {selectedBook !== null && selectedList !== "" && (
+          <View>
+            <DeleteBook book={selectedBook} />
+            <DeleteButton
+              onPress={() => handleRemoveBook(selectedBook, selectedList)}
+            >
+              <DeleteButtonText>Delete</DeleteButtonText>
+            </DeleteButton>
+          </View>
+        )}
       </Modalize>
     </>
   );

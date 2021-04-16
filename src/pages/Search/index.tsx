@@ -42,7 +42,7 @@ interface BookProps {
     description: string;
   };
 }
-export interface SearchProps {
+interface SearchProps {
   navigation: NavigationScreenProp<any, any>;
 }
 
