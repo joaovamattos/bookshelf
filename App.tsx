@@ -8,10 +8,12 @@ import {
   Ubuntu_700Bold,
 } from "@expo-google-fonts/ubuntu";
 
+import { BooksProvider } from "./src/contexts/books";
 import { useTheme } from "./src/contexts/theme";
 import Routes from "./src/routes";
 
 const App: React.FC = () => {
+  const { theme } = useTheme();
   const [fontsLoaded] = useFonts({
     Ubuntu_400Regular,
     Ubuntu_500Medium,
@@ -20,15 +22,15 @@ const App: React.FC = () => {
 
   if (!fontsLoaded) return null;
 
-  const { theme } = useTheme();
-
   return (
     <ThemeProvider theme={theme}>
-      <Routes />
-      <StatusBar
-        backgroundColor={theme.colors.background}
-        style={theme.title === "light" ? "dark" : "light"}
-      />
+      <BooksProvider>
+        <Routes />
+        <StatusBar
+          backgroundColor={theme.colors.background}
+          style={theme.title === "light" ? "dark" : "light"}
+        />
+      </BooksProvider>
     </ThemeProvider>
   );
 };

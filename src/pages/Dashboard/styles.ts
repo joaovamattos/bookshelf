@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { RectButton } from "react-native-gesture-handler";
 
-export const Main = styled.ScrollView`
+export const Section = styled.ScrollView`
   flex: 1;
 `;
 

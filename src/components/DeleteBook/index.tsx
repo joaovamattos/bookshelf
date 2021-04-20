@@ -1,30 +1,15 @@
 import React from "react";
 import { View } from "react-native";
+
+import BookInterface from "../../utils/BookInterface";
 import noThumb from "../../images/noThumbnail.png";
 
 import { Container, BookImage, Title, Warning } from "./styles";
-
-interface Book {
-  volumeInfo: {
-    imageLinks: {
-      thumbnail: string | undefined;
-      smallThumbnail: string | undefined;
-    };
-    title: string;
-    authors: string;
-    pageCount: number;
-    description: string;
-  };
-}
 interface BookProps {
-  book: Book;
+  book: BookInterface;
 }
 
 function DeleteBook({ book }: BookProps) {
-  if (book === null) {
-    return <Container />;
-  }
-
   return (
     <Container>
       <BookImage

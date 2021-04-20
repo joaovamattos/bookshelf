@@ -5,6 +5,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 import { useBooks } from "../../contexts/books";
 import { useTheme } from "../../contexts/theme";
+import BookInterface from "../../utils/BookInterface";
 import noThumb from "../../images/noThumbnail.png";
 
 import {
@@ -20,20 +21,8 @@ import {
   ButtonText,
 } from "./styles";
 
-interface Book {
-  volumeInfo: {
-    imageLinks: {
-      thumbnail: string | undefined;
-      smallThumbnail: string | undefined;
-    };
-    title: string;
-    authors: string;
-    pageCount: number;
-    description: string;
-  };
-}
 interface BookProps {
-  book: Book;
+  book: BookInterface;
   home: boolean;
 }
 interface List {
@@ -124,10 +113,6 @@ function BookForm({ book, home }: BookProps) {
       default:
         break;
     }
-  }
-
-  if (book === null) {
-    return <Container />;
   }
 
   return (

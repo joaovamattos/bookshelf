@@ -1,20 +1,12 @@
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
+import BookInterface from "../../utils/BookInterface";
 import noThumb from "../../images/noThumbnail.png";
 
 import { Container, BookImage, Title, Author } from "./styles";
-interface Book {
-  volumeInfo: {
-    imageLinks: {
-      smallThumbnail: string | undefined;
-    };
-    title: string;
-    authors: string;
-  };
-}
 interface BookProps {
-  book: Book;
+  book: BookInterface;
   home: boolean;
 }
 

@@ -5,17 +5,18 @@ import { NavigationScreenProp } from "react-navigation";
 import { Modalize } from "react-native-modalize";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
+import BookInterface from "../../utils/BookInterface";
 import { useBooks } from "../../contexts/books";
 import { useTheme } from "../../contexts/theme";
 import { Container } from "../../styles/global";
 
 import BookForm from "../../components/BookForm";
-import Reading from "../../components/ReadingBook";
 import Book from "../../components/Book";
+import CurrentBook from "../../components/CurrentBook";
 import DeleteBook from "../../components/DeleteBook";
 
 import {
-  Main,
+  Section,
   Header,
   Wrapper,
   Title,
@@ -32,21 +33,9 @@ import {
 export interface DashboardProps {
   navigation: NavigationScreenProp<any, any>;
 }
-interface BookProps {
-  volumeInfo: {
-    imageLinks: {
-      smallThumbnail: string | undefined;
-      thumbnail: string | undefined;
-    };
-    title: string;
-    authors: string;
-    pageCount: number;
-    description: string;
-  };
-}
 
 function Dashboard({ navigation }: DashboardProps) {
-  const [selectedBook, setSelectedBook] = useState<BookProps | null>(null);
+  const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
   const [selectedList, setSelectedList] = useState("");
 
   const { theme, toggleTheme } = useTheme();
@@ -58,22 +47,25 @@ function Dashboard({ navigation }: DashboardProps) {
     read,
     setRead,
   } = useBooks();
+
   const modalizeRef = useRef<Modalize>(null);
   const removeModalizeRef = useRef<Modalize>(null);
 
-  const handleRemoveBook = useCallback((book: BookProps, list: string) => {
+  const handleRemoveBook = useCallback((book: BookInterface, list: string) => {
     switch (list) {
       case "wantToRead":
-        let filtered = wantToRead.filter((element) => element !== book);
-        setWantToRead(filtered);
+        const filteredWantToRead = wantToRead.filter(
+          (element) => element !== book
+        );
+        setWantToRead(filteredWantToRead);
         break;
       case "reading":
-        filtered = reading.filter((element) => element !== book);
-        setReading(filtered);
+        const filteredReading = reading.filter((element) => element !== book);
+        setReading(filteredReading);
         break;
       case "read":
-        filtered = read.filter((element) => element !== book);
-        setRead(filtered);
+        const filteredRead = read.filter((element) => element !== book);
+        setRead(filteredRead);
         break;
       default:
         break;
@@ -81,13 +73,16 @@ function Dashboard({ navigation }: DashboardProps) {
     removeModalizeRef.current?.close();
   }, []);
 
-  const handleOpenRemoveModal = useCallback((book: BookProps, list: string) => {
-    setSelectedBook(book);
-    setSelectedList(list);
-    removeModalizeRef.current?.open();
-  }, []);
+  const handleOpenRemoveModal = useCallback(
+    (book: BookInterface, list: string) => {
+      setSelectedBook(book);
+      setSelectedList(list);
+      removeModalizeRef.current?.open();
+    },
+    []
+  );
 
-  const handleOpenModal = useCallback((book: BookProps) => {
+  const handleOpenModal = useCallback((book: BookInterface) => {
     setSelectedBook(book);
     modalizeRef.current?.open();
   }, []);
@@ -99,7 +94,7 @@ function Dashboard({ navigation }: DashboardProps) {
   return (
     <>
       <Container>
-        <Main showsVerticalScrollIndicator={false}>
+        <Section showsVerticalScrollIndicator={false}>
           <Header>
             <Wrapper>
               <Feather name="book" size={20} color={theme.colors.text} />
@@ -119,27 +114,29 @@ function Dashboard({ navigation }: DashboardProps) {
             </Wrapper>
           </Header>
 
-          <View>
+          <Section>
             <SectionWrapper>
               <SectionTitle>I'm reading</SectionTitle>
               <Amount>({reading.length})</Amount>
             </SectionWrapper>
-            {reading.length > 0 ? (
-              reading.map((book, index) => (
-                <TouchableWithoutFeedback
-                  key={index}
-                  onPress={() => handleOpenModal(book)}
-                  onLongPress={() => handleOpenRemoveModal(book, "reading")}
-                >
-                  <Reading key={index} book={book} />
-                </TouchableWithoutFeedback>
-              ))
-            ) : (
-              <NoBooks>No books yet :c</NoBooks>
-            )}
-          </View>
+            <BookList>
+              {reading.length > 0 ? (
+                reading.map((book, index) => (
+                  <TouchableWithoutFeedback
+                    key={index}
+                    onPress={() => handleOpenModal(book)}
+                    onLongPress={() => handleOpenRemoveModal(book, "reading")}
+                  >
+                    <CurrentBook book={book} />
+                  </TouchableWithoutFeedback>
+                ))
+              ) : (
+                <NoBooks>No books yet :c</NoBooks>
+              )}
+            </BookList>
+          </Section>
 
-          <View>
+          <Section>
             <SectionWrapper>
               <SectionTitle>I want to read</SectionTitle>
               <Amount>({wantToRead.length})</Amount>
@@ -161,9 +158,9 @@ function Dashboard({ navigation }: DashboardProps) {
                 <NoBooks>No books yet :c</NoBooks>
               )}
             </BookList>
-          </View>
+          </Section>
 
-          <View>
+          <Section>
             <SectionWrapper>
               <SectionTitle>Read</SectionTitle>
               <Amount>({read.length})</Amount>
@@ -174,7 +171,7 @@ function Dashboard({ navigation }: DashboardProps) {
                   <TouchableWithoutFeedback
                     key={index}
                     onPress={() => handleOpenModal(book)}
-                    onLongPress={() => handleOpenRemoveModal(book, "read")}
+                    onLongPress={() => handleOpenRemoveModal(book, "read ")}
                   >
                     <Book book={book} home={true} />
                   </TouchableWithoutFeedback>
@@ -183,8 +180,8 @@ function Dashboard({ navigation }: DashboardProps) {
                 <NoBooks>No books yet :c</NoBooks>
               )}
             </BookList>
-          </View>
-        </Main>
+          </Section>
+        </Section>
       </Container>
 
       <Modalize
@@ -204,7 +201,7 @@ function Dashboard({ navigation }: DashboardProps) {
           backgroundColor: theme.colors.background,
         }}
         handleStyle={{ backgroundColor: theme.colors.lightText }}
-        modalTopOffset={64}
+        modalTopOffset={84}
       >
         {selectedBook !== null && selectedList !== "" && (
           <View>

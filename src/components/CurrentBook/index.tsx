@@ -1,5 +1,6 @@
 import React from "react";
 
+import BookInterface from "../../utils/BookInterface";
 import noThumb from "../../images/noThumbnail.png";
 
 import {
@@ -11,24 +12,11 @@ import {
   Pages,
 } from "./styles";
 
-interface Book {
-  volumeInfo: {
-    imageLinks: {
-      thumbnail: string | undefined;
-      smallThumbnail: string | undefined;
-    };
-    title: string;
-    authors: string;
-    pageCount: number;
-    description: string;
-  };
+interface CurrentBookProps {
+  book: BookInterface;
 }
 
-interface ReadingBookProps {
-  book: Book;
-}
-
-function ReadingBook({ book }: ReadingBookProps) {
+function CurrentBook({ book }: CurrentBookProps) {
   return (
     <Container>
       <BookImage
@@ -49,4 +37,4 @@ function ReadingBook({ book }: ReadingBookProps) {
   );
 }
 
-export default ReadingBook;
+export default CurrentBook;
