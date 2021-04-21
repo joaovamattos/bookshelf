@@ -16,6 +16,7 @@ import CurrentBook from "../../components/CurrentBook";
 import DeleteBook from "../../components/DeleteBook";
 
 import {
+  Main,
   Section,
   Header,
   Wrapper,
@@ -51,27 +52,40 @@ function Dashboard({ navigation }: DashboardProps) {
   const modalizeRef = useRef<Modalize>(null);
   const removeModalizeRef = useRef<Modalize>(null);
 
-  const handleRemoveBook = useCallback((book: BookInterface, list: string) => {
-    switch (list) {
-      case "wantToRead":
-        const filteredWantToRead = wantToRead.filter(
-          (element) => element !== book
-        );
-        setWantToRead(filteredWantToRead);
-        break;
-      case "reading":
-        const filteredReading = reading.filter((element) => element !== book);
-        setReading(filteredReading);
-        break;
-      case "read":
-        const filteredRead = read.filter((element) => element !== book);
-        setRead(filteredRead);
-        break;
-      default:
-        break;
-    }
-    removeModalizeRef.current?.close();
-  }, []);
+  const handleRemoveBook = useCallback(
+    (book: BookInterface, list: string) => {
+      switch (list) {
+        case "wantToRead":
+          let filteredWantToRead = wantToRead;
+          filteredWantToRead = filteredWantToRead.filter(
+            (element) => element.id !== book.id
+          );
+
+          setWantToRead(filteredWantToRead);
+          break;
+        case "reading":
+          let filteredReading = reading;
+          filteredReading = filteredReading.filter(
+            (element) => element.id !== book.id
+          );
+
+          setReading(filteredReading);
+          break;
+        case "read":
+          let filteredRead = read;
+          filteredRead = filteredRead.filter(
+            (element) => element.id !== book.id
+          );
+
+          setRead(filteredRead);
+          break;
+        default:
+          break;
+      }
+      removeModalizeRef.current?.close();
+    },
+    [wantToRead, reading, read]
+  );
 
   const handleOpenRemoveModal = useCallback(
     (book: BookInterface, list: string) => {
@@ -94,7 +108,7 @@ function Dashboard({ navigation }: DashboardProps) {
   return (
     <>
       <Container>
-        <Section showsVerticalScrollIndicator={false}>
+        <Main showsVerticalScrollIndicator={false}>
           <Header>
             <Wrapper>
               <Feather name="book" size={20} color={theme.colors.text} />
@@ -119,21 +133,19 @@ function Dashboard({ navigation }: DashboardProps) {
               <SectionTitle>I'm reading</SectionTitle>
               <Amount>({reading.length})</Amount>
             </SectionWrapper>
-            <BookList>
-              {reading.length > 0 ? (
-                reading.map((book, index) => (
-                  <TouchableWithoutFeedback
-                    key={index}
-                    onPress={() => handleOpenModal(book)}
-                    onLongPress={() => handleOpenRemoveModal(book, "reading")}
-                  >
-                    <CurrentBook book={book} />
-                  </TouchableWithoutFeedback>
-                ))
-              ) : (
-                <NoBooks>No books yet :c</NoBooks>
-              )}
-            </BookList>
+            {reading.length > 0 ? (
+              reading.map((book, index) => (
+                <TouchableWithoutFeedback
+                  key={index}
+                  onPress={() => handleOpenModal(book)}
+                  onLongPress={() => handleOpenRemoveModal(book, "reading")}
+                >
+                  <CurrentBook book={book} />
+                </TouchableWithoutFeedback>
+              ))
+            ) : (
+              <NoBooks>No books yet :c</NoBooks>
+            )}
           </Section>
 
           <Section>
@@ -171,7 +183,7 @@ function Dashboard({ navigation }: DashboardProps) {
                   <TouchableWithoutFeedback
                     key={index}
                     onPress={() => handleOpenModal(book)}
-                    onLongPress={() => handleOpenRemoveModal(book, "read ")}
+                    onLongPress={() => handleOpenRemoveModal(book, "read")}
                   >
                     <Book book={book} home={true} />
                   </TouchableWithoutFeedback>
@@ -181,7 +193,7 @@ function Dashboard({ navigation }: DashboardProps) {
               )}
             </BookList>
           </Section>
-        </Section>
+        </Main>
       </Container>
 
       <Modalize

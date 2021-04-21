@@ -10,6 +10,7 @@ import axios from "axios";
 import { useTheme } from "../../contexts/theme";
 import { Container } from "../../styles/global";
 import searchImage from "../../images/search.png";
+import BookInterface from "../../utils/BookInterface";
 
 import Book from "../../components/Book";
 import BookForm from "../../components/BookForm";
@@ -30,18 +31,7 @@ import {
   ScanButton,
   ButtonText,
 } from "./styles";
-interface BookProps {
-  volumeInfo: {
-    imageLinks: {
-      smallThumbnail: string | undefined;
-      thumbnail: string | undefined;
-    };
-    title: string;
-    authors: string;
-    pageCount: number;
-    description: string;
-  };
-}
+
 interface SearchProps {
   navigation: NavigationScreenProp<any, any>;
 }
@@ -49,7 +39,7 @@ interface SearchProps {
 function Search({ navigation }: SearchProps) {
   const [search, setSearch] = useState("");
   const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState<BookProps | null>(null);
+  const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   const [scanValue, setScanValue] = useState("");
@@ -83,7 +73,7 @@ function Search({ navigation }: SearchProps) {
     }
   }, [scanValue]);
 
-  function handleOpenModal(book: BookProps) {
+  function handleOpenModal(book: BookInterface) {
     setSelectedBook(book);
     modalizeRef.current?.open();
   }

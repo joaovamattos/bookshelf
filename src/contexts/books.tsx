@@ -7,19 +7,7 @@ import React, {
 
 import usePersistedState from "../utils/usePersistedState";
 
-interface Book {
-  volumeInfo: {
-    imageLinks: {
-      thumbnail: string | undefined;
-      smallThumbnail: string | undefined;
-    };
-    title: string;
-    authors: string;
-    pageCount: number;
-    description: string;
-  };
-}
-
+import Book from "../utils/BookInterface";
 interface BoosContextData {
   wantToRead: Array<Book>;
   reading: Array<Book>;

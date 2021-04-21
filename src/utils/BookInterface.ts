@@ -1,4 +1,5 @@
 export default interface Book {
+  id: string;
   volumeInfo: {
     imageLinks: {
       thumbnail: string | undefined;
