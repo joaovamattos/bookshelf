@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import { StatusBar } from "expo-status-bar";
+import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import {
   Ubuntu_400Regular,
@@ -14,13 +15,16 @@ import Routes from "./src/routes";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
-  const [fontsLoaded] = useFonts({
+
+  let [fontsLoaded] = useFonts({
     Ubuntu_400Regular,
     Ubuntu_500Medium,
     Ubuntu_700Bold,
   });
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <ThemeProvider theme={theme}>

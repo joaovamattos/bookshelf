@@ -38,14 +38,8 @@ function BookForm({ book, home }: BookProps) {
 
   const navigation = useNavigation();
   const { theme } = useTheme();
-  const {
-    wantToRead,
-    reading,
-    read,
-    setWantToRead,
-    setReading,
-    setRead,
-  } = useBooks();
+  const { wantToRead, reading, read, setWantToRead, setReading, setRead } =
+    useBooks();
 
   async function handleSubmit() {
     switch (list.value) {
@@ -155,11 +149,15 @@ function BookForm({ book, home }: BookProps) {
               borderRadius: 4,
             }}
             itemStyle={{ justifyContent: "flex-start" }}
-            labelStyle={{ color: theme.colors.primary }}
+            labelStyle={{
+              color: theme.colors.primary,
+              fontFamily: theme.fonts.regular,
+            }}
             dropDownStyle={{
               backgroundColor: theme.colors.background,
               borderColor: theme.colors.primary,
               borderWidth: 2,
+              fontFamily: theme.fonts.regular,
             }}
           />
         </PickerWrapper>

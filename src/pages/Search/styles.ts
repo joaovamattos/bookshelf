@@ -27,14 +27,14 @@ export const Books = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-weight: 700;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 24px;
   color: ${(props) => props.theme.colors.text};
 `;
 
 export const Subtitle = styled.Text`
   margin-top: 4px;
-  font-weight: 400;
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 14px;
   color: ${(props) => props.theme.colors.text};
 `;
@@ -58,6 +58,7 @@ export const Input = styled.TextInput`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   color: ${(props) => props.theme.colors.text};
+  font-family: ${(props) => props.theme.fonts.regular};
 `;
 
 export const InputIcon = styled(RectButton)`
@@ -92,7 +93,7 @@ export const ScanButton = styled(RectButton)`
 
 export const ButtonText = styled.Text`
   margin-left: 8px;
-  font-weight: 700;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 14px;
   color: ${(props) => props.theme.colors.background};
 `;

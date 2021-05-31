@@ -15,7 +15,7 @@ export const BookImage = styled.Image`
 export const Title = styled.Text`
   text-align: center;
   margin-bottom: 8px;
-  font-weight: 700;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 18px;
   color: ${(props) => props.theme.colors.text};
   flex-wrap: wrap;
@@ -24,7 +24,7 @@ export const Title = styled.Text`
 export const Warning = styled.Text`
   text-align: center;
   margin-top: 12px;
-  font-weight: 700;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 20px;
   color: ${(props) => props.theme.colors.text};
   flex-wrap: wrap;

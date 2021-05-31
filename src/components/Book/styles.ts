@@ -19,7 +19,7 @@ export const BookImage = styled.Image`
 export const Title = styled.Text`
   max-width: 100px;
   margin-bottom: 4px;
-  font-weight: 600;
+  font-family: ${(props) => props.theme.fonts.medium};
   font-size: 16px;
   color: ${(props) => props.theme.colors.lightText};
   flex-wrap: wrap;
@@ -27,7 +27,7 @@ export const Title = styled.Text`
 
 export const Author = styled.Text`
   max-width: 100px;
-  font-weight: 400;
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 12px;
   color: ${(props) => props.theme.colors.lightText};
 `;

@@ -1,3 +1,5 @@
+import fonts from "../fonts";
+
 export default {
   title: "dark",
 
@@ -10,4 +12,6 @@ export default {
     text: "#F4F4F8",
     lightText: "#e1e1e6",
   },
+
+  fonts,
 };

@@ -21,7 +21,7 @@ export const BookImage = styled.Image`
 export const Title = styled.Text`
   text-align: center;
   margin-bottom: 8px;
-  font-weight: 700;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 18px;
   color: ${(props) => props.theme.colors.text};
   flex-wrap: wrap;
@@ -29,20 +29,20 @@ export const Title = styled.Text`
 
 export const Author = styled.Text`
   max-width: 200px;
-  font-weight: 400;
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 16px;
   color: ${(props) => props.theme.colors.lightText};
 `;
 
 export const Pages = styled.Text`
-  font-weight: 700;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 12px;
   color: ${(props) => props.theme.colors.primary};
 `;
 
 export const Description = styled.Text`
   margin: 12px 0;
-  font-weight: 400;
+  font-family: ${(props) => props.theme.fonts.regular};
   font-size: 14px;
   color: ${(props) => props.theme.colors.lightText};
 `;
@@ -65,7 +65,7 @@ export const Button = styled(RectButton)`
 
 export const ButtonText = styled.Text`
   margin-left: 16px;
-  font-weight: 700;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 14px;
   color: ${(props) => props.theme.colors.background};
 `;

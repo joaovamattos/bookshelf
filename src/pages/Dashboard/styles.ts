@@ -24,9 +24,9 @@ export const Wrapper = styled.View`
 
 export const Title = styled.Text`
   margin-left: 8px;
-  font-weight: 700;
   font-size: 24px;
   color: ${(props) => props.theme.colors.text};
+  font-family: ${(props) => props.theme.fonts.bold};
 `;
 
 export const Button = styled(RectButton)`
@@ -40,9 +40,9 @@ export const Button = styled(RectButton)`
 `;
 
 export const SectionTitle = styled.Text`
-  font-weight: 700;
   font-size: 18px;
   color: ${(props) => props.theme.colors.text};
+  font-family: ${(props) => props.theme.fonts.bold};
 `;
 
 export const SectionWrapper = styled.View`
@@ -54,9 +54,9 @@ export const SectionWrapper = styled.View`
 `;
 
 export const Amount = styled.Text`
-  font-weight: 700;
   font-size: 14px;
   color: ${(props) => props.theme.colors.primary};
+  font-family: ${(props) => props.theme.fonts.bold};
 `;
 
 export const BookList = styled.ScrollView.attrs({
@@ -69,9 +69,9 @@ export const BookList = styled.ScrollView.attrs({
 
 export const NoBooks = styled.Text`
   margin-bottom: 48px;
-  font-weight: 600;
   font-size: 16px;
   color: ${(props) => props.theme.colors.primary};
+  font-family: ${(props) => props.theme.fonts.medium};
 `;
 
 export const DeleteButton = styled(RectButton)`
@@ -87,7 +87,7 @@ export const DeleteButton = styled(RectButton)`
 
 export const DeleteButtonText = styled.Text`
   margin-left: 8px;
-  font-weight: 700;
+  font-family: ${(props) => props.theme.fonts.bold};
   font-size: 14px;
   color: ${(props) => props.theme.colors.background};
 `;
