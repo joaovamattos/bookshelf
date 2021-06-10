@@ -16,7 +16,7 @@ Bookshelf
 
 <div align="center">
   <img src="https://user-images.githubusercontent.com/23246259/115597606-6f91db00-a2a7-11eb-9f37-53a01d56e44e.gif" alt="demo" height="420">
-  <img src="https://user-images.githubusercontent.com/23246259/115597611-715b9e80-a2a7-11eb-9d76-4617b1fa91b0.png" alt="overview" height="420">
+  <img src="https://user-images.githubusercontent.com/23246259/121527607-94155400-c9c8-11eb-862b-185e07a06b4a.png" alt="overview" height="420">
 </div>
 
 <hr />
